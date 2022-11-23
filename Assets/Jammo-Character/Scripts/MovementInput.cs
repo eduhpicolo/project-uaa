@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //This script requires you to have setup your animator with 3 parameters, "InputMagnitude", "InputX", "InputZ"
 //With a blend tree to control the inputmagnitude and allow blending between animations.
@@ -38,11 +40,19 @@ public class MovementInput : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		anim = this.GetComponent<Animator> ();
-		cam = Camera.main;
-		controller = this.GetComponent<CharacterController> ();
+		//anim = this.GetComponent<Animator> ();
+		//cam = Camera.main;
+		//controller = this.GetComponent<CharacterController> ();
 	}
-	
+
+
+
+	public void goToMenu()
+	{
+		
+		SceneManager.LoadScene("Menu");
+	}
+
 	// Update is called once per frame
 	void Update () {
 		InputMagnitude ();
@@ -51,6 +61,7 @@ public class MovementInput : MonoBehaviour {
         if (isGrounded)
         {
             verticalVel -= 0;
+
 			Jump();
         }
         else
@@ -63,16 +74,15 @@ public class MovementInput : MonoBehaviour {
 
     }
 
-	[SerializeField] private int jumpForce;
-	private void Jump()
+	public float jumpForce = 10;
+
+	void Jump()
 	{
 		if (Input.GetKeyDown("space"))
 		{
 			verticalVel = jumpForce;
-
-        }
-
-    }
+		}
+	}
 
     void PlayerMoveAndRotation() {
 		InputX = Input.GetAxis ("Horizontal");
